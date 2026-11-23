@@ -1,8 +1,0 @@
-{
-  "appId": "et.bingo.app",
-  "appName": "BINGO ET",
-  "webDir": "../",
-  "server": {
-    "androidScheme": "https"
-  }
-}
