@@ -1,4 +1,4 @@
-const CACHE_NAME = "bingo-et-v6-full";
+const CACHE_NAME = "bingo-et-v5";
 const ASSETS = [
   "./",
   "./index.html",
