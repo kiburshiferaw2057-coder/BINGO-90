@@ -28,29 +28,31 @@ jobs:
         with:
           gradle-version: "8.5"
 
-      - name: Sync web assets into Android project
+      - name: Sync web assets and configure SDK path
         run: |
           if [ -d "android" ]; then
             mkdir -p android/app/src/main/assets/public
             for f in index.html styles.css app.js manifest.json sw.js; do
               [ -f "$f" ] && cp "$f" android/app/src/main/assets/public/
             done
+            SDK_DIR="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+            echo "sdk.dir=${SDK_DIR}" > android/local.properties
           fi
 
       - name: Build Debug APK
         run: |
           if [ -f "gradlew" ]; then
             chmod +x gradlew
-            ./gradlew assembleDebug
+            ./gradlew assembleDebug --stacktrace
           elif [ -f "android/gradlew" ]; then
             cd android
             chmod +x gradlew
-            ./gradlew assembleDebug
+            ./gradlew assembleDebug --stacktrace
           elif [ -d "android" ]; then
             cd android
-            gradle assembleDebug
+            gradle assembleDebug --stacktrace
           else
-            gradle assembleDebug
+            gradle assembleDebug --stacktrace
           fi
 
       - name: Upload Debug APK Artifact
